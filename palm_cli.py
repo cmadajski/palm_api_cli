@@ -12,7 +12,12 @@ if __name__ == "__main__":
     max_token = 800
     # get user prompt
     prompt = input('Enter a prompt: ')
-    # send query data to PaLM API
-    completion = palm.generate_text(model=model, prompt=prompt, temperature=temp, max_output_tokens=max_token)
-    # print API response
-    print(completion.result)
+    # send data to the PaLM API if all required data is present
+    if prompt:
+        # send query data to PaLM API
+        completion = palm.generate_text(model=model, prompt=prompt, temperature=temp, max_output_tokens=max_token)
+        # print API response
+        print(completion.result)
+    # print an error message if prompt is empty
+    else:
+        print("No prompt provided. A prompt is required to use the PaLM API.")
