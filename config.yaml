@@ -1,0 +1,4 @@
+---
+model: "text-bison-001"
+temp: 0
+max_output_tokens: 800
