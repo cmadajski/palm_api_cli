@@ -26,6 +26,7 @@ if __name__ == "__main__":
         model = models[0].name
         # get user prompt
         prompt = input('Enter a prompt: ')
+        print('-' * 100)
         # send data to the PaLM API if all required data is present
         if prompt:
             # send query data to PaLM API
@@ -40,6 +41,7 @@ if __name__ == "__main__":
         continue_chat = True
         # start chat conversation
         chat_start_message = input('Start conversation: ')
+        print('-' * 100)
         if chat_start_message in valid_chat_exit:
             continue_chat = False
         elif not chat_start_message: 
@@ -47,8 +49,10 @@ if __name__ == "__main__":
         else:
             response = palm.chat(messages=chat_start_message)
             print(f'PaLM: {response.last}')
+            print('-' * 100)
             while continue_chat:
-                chat_reply_message = input('Your reply: ')
+                chat_reply_message = input('Next query: ')
+                print('-' * 100)
                 if chat_reply_message in valid_chat_exit:
                     continue_chat = False
                 elif not chat_reply_message:
@@ -56,6 +60,7 @@ if __name__ == "__main__":
                 else:
                     response = response.reply(chat_reply_message)
                     print(f'PaLM: {response.last}')
+                    print('-' * 100)
     # GENERATION NOT SUPPORTED
     else:
         print(f'Generation method "{generation_method}" is not supported.')
