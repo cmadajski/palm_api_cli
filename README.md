@@ -1,7 +1,8 @@
 # Google PaLM via Command Line
 
 Interact with the Google PaLM API using a Python script.
-For now, this is merely a proof-of-concept and has no practical use.
+I made this utility specifically to improve my personal workflow so I can ask PaLM questions
+while I'm typing away in the terminal.
 
 ## API Details
 
@@ -15,6 +16,8 @@ Text generation is used for discrete queries that only involve a single request/
 Chat generation is more conversational since it can keep track of previous prompts.
 Embeddings are useful for NLP tasks (semantic search, summarization, classification, clustering, etc.).
 
+For more detailed API info, check out Google's [official docs](https://developers.generativeai.google/api/python/google/generativeai).
+
 ## Python Specific Nuances
 
 In order to access the API, you need a PaLM API key. Ideally, the key is saved as an evironment variable 
@@ -24,13 +27,25 @@ then pulled into the script using the OS module:
 
 All the currently available models can be viewed using `palm.list_models()`
 
-For simple text generation, use `response = palm.generate_text()` with at least a model and a prompt to get a response.
-The response can be accessed via the `response.result` attribute.
+For single questions that only require 1 API request:
 
-For continuous conversations, use `response = palm.chat(messages="initial message here")` to start a conversation and 
-use `response.reply()` for all subsequent model interactions. Use `response.last` to see the most recent model response.
+```
+response = palm.generate_text(prompt='Who is the current President of the United States?")
+print(response.result)
+```
+
+For continuous conversations (chat):
+
+```
+response = palm.chat(messages=["Hello PaLM, how are you?"])
+print(response.last)
+response.reply("What is the capital of Iowa?")
+print(response.last)
+```
+
 Conversation history can be accessed in `response.messages` where author 0 is the user and author 1 is the model.
-If you change the candidate_count to a value above 1, you can view alternative responses with `response.candidates`.
+Changing the candidate_count to a value above 1 will provide multiple responses for the same query. You can view
+alternative responses via `response.candidates`.
 
 ## Prompt Design Principles
 
