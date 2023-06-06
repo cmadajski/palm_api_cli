@@ -12,9 +12,18 @@ def read_yaml(yamlFile: str) -> dict:
         yamlDict = yaml.safe_load(f)
     return yamlDict
 
+def check_env():
+    pass
+
 if __name__ == "__main__":
-    # get PaLM API key from environment variable
+    # determine if PaLM API key is present
+    api_key = os.getenv('palm_key')
+    # keep asking for PaLM API key until a valid key is provided
+    while not api_key:
+        new_key = input('No PaLM API key found. Enter new PaLM API key: ')
+    # ADD PALM KEY VALIDATION HERE (len=39)
     palm.configure(api_key=os.getenv('palm_key'))
+        
     # read config data from yaml
     config = read_yaml('config.yaml')
     # determine which generation method is desired
